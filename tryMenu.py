@@ -1,5 +1,6 @@
 from tkinter import Tk, Frame, Label, Entry, Button
 from tms import create_main_window
+from DHT import create_dht_window
 
 
 
@@ -16,6 +17,8 @@ def open_menu():
         create_main_window()
 
     def app2():
+        menu.destroy()
+        create_dht_window()
         print("HUMIDITY & TEMPERATURE")
     def app3():
         print("LOCK / UNLOCK SYSTEM")

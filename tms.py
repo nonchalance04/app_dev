@@ -230,8 +230,6 @@ def stop_button_clicked():
 # CREATE THE WINDOW AND BUTTONS
 # =============================================================================
 
-
-    
 def create_main_window():
     """Create the main program window with all buttons"""
     global timer_label, status_label, main_window
@@ -239,27 +237,30 @@ def create_main_window():
 
     from tryMenu import open_menu
 
+    # Connect to Arduino when opening the TMS window
+    connect_to_arduino()
+
     # Create main window
     window = tk.Tk()
     main_window = window
-    window.title("Simple Traffic Light Controller")
-    window.geometry("350x500")
+    window.title("Traffic Light Management System")
+    window.geometry("380x530")
     window.configure(bg='lightgray')
 
     def back_to_main():
+        global arduino_connection
+        # Close Arduino connection
+        if arduino_connection:
+            arduino_connection.close()
+            arduino_connection = None
+            print("Arduino disconnected.")
         window.destroy()
         open_menu()
-    def on_close():
-        window.destroy()
-        open_menu.deiconify()
 
     window.protocol("WM_DELETE_WINDOW", back_to_main)
 
-    back_button = tk.Button(window, text="Back", command=back_to_main).pack(pady=10)
-
-    
     # Title
-    title_label = tk.Label(window, text="Traffic Light Controller", 
+    title_label = tk.Label(window, text="Traffic Light Management System", 
                           font=("Arial", 16, "bold"),
                           bg='lightgray')
     title_label.pack(pady=20)
@@ -307,21 +308,20 @@ def create_main_window():
     return window
 
 # =============================================================================
-# MAIN PROGRAM STARTS HERE
+# MAIN PROGRAM STARTS HERE (only runs if this file is executed directly)
 # =============================================================================
 if __name__ == "__main__":
     print("Starting Traffic Light Controller...")
-    
+        
     # Connect to Arduino
     connect_to_arduino()
-    
+        
     # Create the window
     main_window = create_main_window()
-
-    
+        
     # Start the program
     main_window.mainloop()
-    
+        
     # Clean up when program ends
     if arduino_connection:
         arduino_connection.close()
