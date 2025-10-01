@@ -18,7 +18,8 @@ def open_menu():
 
     def app2():
         menu.destroy()
-        create_dht_window()
+        dht_window = create_dht_window()
+        dht_window.mainloop()
         print("HUMIDITY & TEMPERATURE")
     def app3():
         print("LOCK / UNLOCK SYSTEM")

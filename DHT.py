@@ -168,7 +168,7 @@ def create_dht_window():
                 line = ser.readline().decode('utf-8').strip()
                 if line and line != last_value:  # update only when value changes
                     last_value = line
-                    update_display(line)
+                    root.after(0, lambda l=line: update_display(l))
                     winsound.Beep(1000, 150)  # short beep when updated
     
     def start_thread():
